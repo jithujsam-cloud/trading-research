@@ -1,0 +1,22 @@
+# Personal financial data and anything derived from it never goes into git.
+data/
+reports/
+*.xlsx
+*.xls
+*.csv
+*.pdf
+*.db
+*.sqlite
+
+# Credentials
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.egg-info/
+.venv/
+.pytest_cache/
+build/
+dist/

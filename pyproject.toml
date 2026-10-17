@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tradelab"
+version = "0.1.0"
+description = "Evidence-based trading research and risk management (Groww). Read-only; no order placement."
+requires-python = ">=3.10"
+dependencies = [
+  "pandas>=2.2",
+  "numpy>=1.26",
+  "openpyxl>=3.1",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+# growwapi pins pandas<3, so install it in its own virtualenv if your pandas is newer.
+groww = ["growwapi>=1.5.0", "pyotp>=2.9"]
+dev = ["pytest>=8"]
+
+[project.scripts]
+tradelab = "tradelab.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

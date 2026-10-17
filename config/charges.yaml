@@ -1,0 +1,47 @@
+# Charge schedule used for ESTIMATED costs. Every rate is effective-dated so a
+# backtest of 2021 uses 2021 rates. Rates marked `verify: true` came from
+# secondary sources; check them against a real Groww contract note before
+# trusting a result that depends on them. `tradelab` reports which entries it used.
+#
+# Rates are fractions (0.0015 = 0.15%) unless the key ends in _rupees.
+
+gst_rate: 0.18                       # on brokerage + exchange charges + SEBI fee
+sebi_fee_per_crore_rupees: 10
+
+options:                             # index options, NSE; applied per executed order
+  brokerage_per_order_rupees:
+    - {from: "2020-01-01", value: 20, verify: true, source: "Groww pricing, multiple secondary sources 2026"}
+  stt_on_sell_premium:
+    - {from: "2020-01-01", value: 0.0005}
+    - {from: "2023-04-01", value: 0.000625}
+    - {from: "2024-10-01", value: 0.001}
+    - {from: "2026-04-01", value: 0.0015, source: "Union Budget 2026, effective 1 Apr 2026"}
+  exchange_txn_on_premium:
+    - {from: "2020-01-01", value: 0.00053, verify: true}
+    - {from: "2024-10-01", value: 0.0003503, verify: true, source: "NSE uniform charges from 1 Oct 2024"}
+  stamp_on_buy_premium:
+    - {from: "2020-07-01", value: 0.00003}
+
+equity_delivery:
+  brokerage_rule:                    # min(cap, rate * value), floored at minimum
+    - {from: "2020-01-01", cap_rupees: 20, rate: 0.001, min_rupees: 5, verify: true}
+  stt_both_sides:
+    - {from: "2020-01-01", value: 0.001}
+  exchange_txn:
+    - {from: "2020-01-01", value: 0.0000345, verify: true}
+    - {from: "2024-10-01", value: 0.0000297, verify: true}
+  stamp_on_buy:
+    - {from: "2020-07-01", value: 0.00015}
+  dp_charge_per_scrip_sell_day_rupees:
+    - {from: "2020-01-01", value: 16.5, verify: true}
+
+equity_intraday:
+  brokerage_rule:
+    - {from: "2020-01-01", cap_rupees: 20, rate: 0.001, min_rupees: 5, verify: true}
+  stt_on_sell:
+    - {from: "2020-01-01", value: 0.00025}
+  exchange_txn:
+    - {from: "2020-01-01", value: 0.0000345, verify: true}
+    - {from: "2024-10-01", value: 0.0000297, verify: true}
+  stamp_on_buy:
+    - {from: "2020-07-01", value: 0.00003}
