@@ -1,0 +1,9 @@
+# Used by Vercel to build the web app. Keep in step with pyproject.toml.
+pandas>=2.2,<3
+numpy>=1.26
+openpyxl>=3.1
+pyyaml>=6.0
+requests>=2.32
+fastapi>=0.115
+python-multipart>=0.0.9
+markdown>=3.6

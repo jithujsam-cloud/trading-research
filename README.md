@@ -30,6 +30,18 @@ pip install growwapi pyotp
 tradelab audit-api
 ```
 
+## Web app (Vercel)
+
+A password-protected, read-only web app: upload statements, see the report and
+the option-viability table, and save a daily snapshot of today's orders and
+fills (Groww's API keeps only today's). Setup: `docs/07-deploy-vercel.md`.
+Run it locally with:
+
+```bash
+APP_PASSWORD=pick-one SESSION_SECRET=$(python -c "import secrets;print(secrets.token_hex(32))") \
+  uvicorn tradelab.web.app:app --app-dir src --reload
+```
+
 ## How numbers are labelled
 
 | Label | Meaning |
@@ -52,6 +64,9 @@ src/tradelab/
   viability.py   can one option lot fit the risk limit?
   broker/        read-only Groww wrapper, credential redaction, API audit
   store.py       clean dataset (SQLite + CSV) with provenance
+  web/           FastAPI app, login, Supabase storage, daily snapshot job
+api/index.py     Vercel entry point
+supabase/        database migration
 docs/            audit, data inventory, engine design, Strategy A spec, go-live criteria, plan
 ```
 

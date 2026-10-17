@@ -12,9 +12,7 @@ from pathlib import Path
 
 from . import report
 from .costs import CostModel
-from .history import analyze
-from .ingest import load_ledger, load_stock_orders
-from .reconstruct import round_trips
+from .pipeline import run_history
 from .store import write_clean_dataset
 from .viability import grid
 
@@ -22,19 +20,10 @@ DEFAULT_LOT_SIZE = 65  # NIFTY, Groww instrument file 17 Oct 2026; re-read with 
 
 
 def cmd_history(args) -> int:
-    ledger, v1 = load_ledger(args.ledger)
-    orders, v2 = load_stock_orders(args.orders)
-    trades, open_lots = round_trips(orders)
-    validation = v1 + v2
-    if not open_lots.empty:
-        validation.append(f"{len(open_lots)} open stock lot(s) left unmatched (still held or bought before the export): "
-                          + ", ".join(sorted(open_lots["symbol"].unique())))
-    write_clean_dataset(Path(args.data) / "tradelab.db", Path(args.data) / "clean",
-                        {"ledger": ledger, "stock_orders": orders, "stock_round_trips": trades, "stock_open_lots": open_lots})
-    result = analyze(ledger, orders, trades, seed=args.seed)
-    result["validation"] = validation
+    result, tables = run_history(args.ledger, args.orders, seed=args.seed)
+    write_clean_dataset(Path(args.data) / "tradelab.db", Path(args.data) / "clean", tables)
     report.write_json(Path(args.out) / "history.json", result)
-    report.write(Path(args.out) / "history.md", report.history_markdown(result, validation))
+    report.write(Path(args.out) / "history.md", report.history_markdown(result, result["validation"]))
     print(f"wrote {Path(args.out) / 'history.md'} and {Path(args.data) / 'tradelab.db'}")
     return 0
 

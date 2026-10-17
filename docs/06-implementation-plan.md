@@ -6,6 +6,7 @@ note of what it can and cannot show.
 | Stage | Builds | Status | Needs |
 |---|---|---|---|
 | **1. Research foundation** | Importers for the Groww ledger and stock orders with validation; clean dataset (SQLite + CSV) with provenance; FIFO round trips; effective-dated cost model; statistics with bootstrap intervals; history report; option lot-viability calculator; read-only API wrapper and audit command; pre-registered Strategy A and go-live criteria | **Done** | — |
+| **1b. Web app on Vercel** | Login, statement upload and report, option viability, read-only daily snapshot of orders, fills, positions and funds into Supabase | **Done** | Vercel + Supabase settings |
 | **2. Fill the gaps** | Run `audit-api`; parse F&O contract notes and tradebook; calibrate `charges.yaml` against actual charges; answer the give-back and repeat-entry questions from real F&O trades | Next | Your contract notes or tradebook, a new API key |
 | **3. Market data layer** | Candle downloader with chunking, rate limiting, caching and validation; expiry and contract lists; lot-size history | | One paid API month |
 | **4. Backtest engine + Strategy A** | Components in `03-engine-design.md`; look-ahead tests; baselines; development run, then one validation run, then one final run | | Stage 3 data |

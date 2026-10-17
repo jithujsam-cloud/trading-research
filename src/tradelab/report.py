@@ -112,8 +112,8 @@ def history_markdown(a: dict, validation: list[str]) -> str:
         w("**Charges implied by the ledger** [derived]\n")
         w("| Window | Turnover | Implied charges | Share of turnover |\n|---|---|---|---|")
         for r in _v(st["charges_reconciliation"]):
-            w(f"| {r['from']} to {r['to']} | {rs(r['turnover'])} | {rs(r['implied_charges'])} | "
-              f"{'n/a' if r['charges_pct_of_turnover'] is None else f'{r['charges_pct_of_turnover']:.2%}'} |")
+            share = "n/a" if r["charges_pct_of_turnover"] is None else f"{r['charges_pct_of_turnover']:.2%}"
+            w(f"| {r['from']} to {r['to']} | {rs(r['turnover'])} | {rs(r['implied_charges'])} | {share} |")
         for u in _v(st["unsettled_windows"]):
             w(f"\nNot yet settled in the statement, so excluded: {u}.")
         n = _v(st["net_in_ledger_period"])
