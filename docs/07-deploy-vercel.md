@@ -45,6 +45,13 @@ the **Daily snapshots** page the next evening.
 | `history_reports` | The analysis of each statement upload (the uploaded files are not stored) |
 | `settings` | The current Nifty lot size from Groww's instrument file |
 
+## Automatic deploys
+
+Vercel deploys every push to `main`. On the Hobby plan it skips a commit whose
+author is not the Vercel account owner, so commits in this repository are
+authored as the owner. If a push does not deploy, open Deployments in Vercel
+and check for a "blocked" notice, or use Redeploy on the latest deployment.
+
 ## Limits
 
 - The Groww key lives in Vercel's encrypted settings. It can read your account and, through Groww directly, could place orders, so treat it like a password. This app never uses it for orders.
